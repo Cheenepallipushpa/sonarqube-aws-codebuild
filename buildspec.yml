@@ -1,7 +1,7 @@
 version: 0.2
 env:
   secrets-manager:
-    LOGIN: local/sonar1:sonartoken
+    LOGIN: local/sonar1:LOGIN
     HOST: local/sonar1:HOST
     Organization: local/sonar1:Organization
     Project: local/sonar1:Project
@@ -27,9 +27,8 @@ phases:
       - apt-get update
       - apt-get install -y jq
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
-      - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
-      - ls $PWD
-      - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
+      - unzip sonar-scanner-cli-4.7.0.2747-linux.zip
+      - export PATH=$PATH:$PWD/sonar-scanner-4.7.0.2747-linux/bin/
 
   build:
     commands:
