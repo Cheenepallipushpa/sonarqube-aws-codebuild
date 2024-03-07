@@ -1,10 +1,10 @@
 version: 0.2
 env:
   secrets-manager:
-    LOGIN: local/sonar1:LOGIN
-    HOST: local/sonar1:HOST
-    Organization: local/sonar1:Organization
-    Project: local/sonar1:Project
+    LOGIN: local/sonar1:sqp_dbf9a3027faefb7948150fbe02af32992d4e7d70
+    HOST: local/sonar1:https://sonarcloud.io
+    Organization: local/sonar1:cheenepallipushpa
+    Project: local/sonar1:sonarqube
 
 phases:
   install:
