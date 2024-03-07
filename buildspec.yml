@@ -5,6 +5,7 @@ env:
     HOST: local/sonar1:HOST
     Organization: local/sonar1:Organization
     Project: local/sonar1:Project
+    MY_SECRET: ${SECRET_ID}
 phases:
   install:
     commands:
@@ -25,6 +26,7 @@ phases:
   build:
     commands:
       - echo "Build phase ..."
+      - echo $MY_SECRET
       - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=$HOST -Dsonar.projectKey=$Project -Dsonar.organization=$Organization
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
