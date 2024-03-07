@@ -5,7 +5,7 @@ env:
     HOST: local/sonar1:HOST
     Organization: local/sonar1:Organization
     Project: local/sonar1:Project
-    MY_SECRET: ${SECRET_ID}
+  
 phases:
   install:
     commands:
@@ -26,7 +26,9 @@ phases:
   build:
     commands:
       - echo "Build phase ..."
-      - echo $MY_SECRET
+      - SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id $SECRET_ID)
+      - MY_SECRET_VALUE=$(echo $SECRET_JSON | jq -r '.SecretString' | jq -r '.mySecretKey')
+      - echo $MY_SECRET_VALUE
       - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=$HOST -Dsonar.projectKey=$Project -Dsonar.organization=$Organization
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
