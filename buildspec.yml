@@ -16,21 +16,18 @@ phases:
       - echo "Pre build phase ..."
       - apt-get update
       - apt-get install -y jq
-      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
-      - echo "Current path is >>>"
-      - sh $pwd
-      - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
-      - ls $pwd
-      - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
   build:
     commands:
       - echo "Build phase ..."
       - npm install -g sonarqube-scanner
-      - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=$HOST -Dsonar.projectKey=$Project -Dsonar.organization=$Organization
+      - sonar-scanner -Dsonar.login=${env.LOGIN} -Dsonar.host.url=${env.HOST} -Dsonar.projectKey=${env.Project} -Dsonar.organization=${env.Organization}
       - sleep 5
-      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
+      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=${env.Project} > result.json
       - cat result.json
-      - if [ $(jq -r '.projectStatus.status' result.json) = ERROR ] ; then $CODEBUILD_BUILD_SUCCEEDING -eq 0 ;fi
+      - CODEBUILD_BUILD_SUCCEEDING=1
+      - if [[ $(jq -r '.projectStatus.status' result.json) == "ERROR" ]]; then CODEBUILD_BUILD_SUCCEEDING=0; fi
+      - echo "CODEBUILD_BUILD_SUCCEEDING=${CODEBUILD_BUILD_SUCCEEDING}" >> env.list
   post_build:
     commands:
       - echo "Post build phase ..."
+  
