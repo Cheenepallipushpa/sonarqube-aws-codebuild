@@ -9,6 +9,7 @@ phases:
   install:
     runtime-versions:
       nodejs: 18  # Adjust the Node.js version as needed
+      java: corretto17
     commands:
       - echo "Install phase ..."
       - apt-get update
