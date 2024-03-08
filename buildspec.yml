@@ -4,8 +4,8 @@ env:
     LOGIN: local/sonar1:sonartoken
     HOST: local/sonar1:HOST
     Organization: local/sonar1:Organization
-    Project: local/sonar1:project
- phases:
+    Project: local/sonar1:Project
+phases:
   install:
     commands:
       - echo "Install phase ..."
