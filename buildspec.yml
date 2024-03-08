@@ -20,9 +20,9 @@ phases:
     commands:
       - echo "Build phase ..."
       - npm install -g sonarqube-scanner
-      - sonar-scanner -Dsonar.login=${env.LOGIN} -Dsonar.host.url=${env.HOST} -Dsonar.projectKey=${env.Project} -Dsonar.organization=${env.Organization}
+      - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=$HOST -Dsonar.projectKey=$Project -Dsonar.organization=$Organization
       - sleep 5
-      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=${env.Project} > result.json
+      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
       - cat result.json
       - CODEBUILD_BUILD_SUCCEEDING=1
       - if [[ $(jq -r '.projectStatus.status' result.json) == "ERROR" ]]; then CODEBUILD_BUILD_SUCCEEDING=0; fi
