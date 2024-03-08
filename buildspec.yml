@@ -4,14 +4,14 @@ env:
     LOGIN: local/sonar1:sonartoken
     HOST: local/sonar1:HOST
     Organization: local/sonar1:Organization
-    Project: local/sonar1:project
+    Project: local/sonar1:Project
 phases:
   install:
     commands:
       - echo "Install phase ..."
     runtime-versions:
       nodejs: 18
-   pre_build:
+  pre_build:
     commands:
       - echo "Pre build phase ..."
       - apt-get update
